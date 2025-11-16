@@ -2,8 +2,12 @@ import cv2
 import numpy as np
 import time
 import random
-import win32api, win32con
 import mss
+import pyautogui
+
+# Disable the pyautogui fail-safe to avoid unwanted exceptions when the cursor
+# reaches a corner during rapid movements.
+pyautogui.FAILSAFE = False
 
 class UI:
     def __init__(self):
@@ -14,10 +18,10 @@ class UI:
         self.deck_x = [1131, 1272, 1429, 1572]
 
     def click(self, x, y):
-        win32api.SetCursorPos((x, y)) #formatted as x,y (standard position formatting)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        pyautogui.moveTo(x, y, duration=0) #formatted as x,y (standard position formatting)
+        pyautogui.mouseDown()
         time.sleep(0.01)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+        pyautogui.mouseUp()
 
     def capture_screenshot(self, region=None):
         with mss.mss() as sct:

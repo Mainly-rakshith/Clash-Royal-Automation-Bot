@@ -9,7 +9,7 @@
 6. [Credits](#credits)
 
 ## Introduction
-This is a Clash Royale Automation script that can play, exit matches, and queue into matches (Use at your own risk, this bot breaks Supercell TOS).
+This is a Clash Royale Automation script that can play, exit matches, and queue into matches (Use at your own risk, this bot breaks Supercell TOS). The scripts now target macOS with an iPhone mirrored to your Mac (QuickTime Player device window or the new macOS “iPhone Mirroring” window).
 
 ## Features
 - Plays Clash Royale without user input
@@ -21,8 +21,8 @@ This is a Clash Royale Automation script that can play, exit matches, and queue 
 * Python
    * Version: 3.12.4
    * Description: Python is the programming language used to develop this script.
-* Google Play Emulator
-   * Description: Keep in center of primary monitor (where it opens). 
+* macOS Screen + Input Access
+   * Description: Mirror your iPhone screen to macOS (QuickTime Player device window or macOS “iPhone Mirroring”). Keep the mirrored window centered on your primary monitor and **do not resize it while the bot runs**.
 * OpenCV
    * Version: 4.10.0.84
    * Image Recognition to detect cards.
@@ -32,54 +32,55 @@ This is a Clash Royale Automation script that can play, exit matches, and queue 
 * NumPy
    * Version: 1.26.3
    * Array computation
-* PyWin32
-   * Version: 306
-   * Clicks on cards, places them, and clicks on battle and exit buttons.
+* PyAutoGUI
+   * Version: 0.9.54
+   * Cross-platform mouse control used on macOS.
+* Pillow
+   * Version: 10.4.0
+   * Required by PyAutoGUI image/screenshot helpers.
 * Keyboard
    * Version: 0.13.5
    * Press 'q' to shutdown script.
 
-## Installation
-1. Install Git (Windows)
-   * Download the [Git installer for windows](https://gitforwindows.org/).
-   * Run the installer and follow the prompts. Ensure to select the option to add Git to your system PATH during installation.
-2. Run and Verify Git Installation
+## Installation (macOS + iPhone mirroring)
+1. Install Git (macOS)
    ```sh
+   xcode-select --install
    git --version
    ```
-3. Navigate to the directory where you want to clone the respository:
-   ```sh
-   cd Desktop
-   ```
-4. Clone the repository:
+2. Clone the repository:
    ```sh
    git clone https://github.com/JustinT301/golembot1.0.git
-   ```
-5. Navigate to the Cloned Repository:
-   ```sh
    cd golembot1.0
    ```
-6. Before running the code, ensure you have Python and Dependances installed:
+3. Install Python dependencies:
    ```sh
-   python --version
+   python3 -m pip install -r requirements.txt
    ```
-   If Python is not installed, it can be downloaded [here](https://www.python.org/downloads/release/python-3124/)
-   ```sh
-   pip install -r requirements.txt
-   ```
+4. Grant permissions:
+   * System Settings → Privacy & Security → Screen Recording: allow Terminal (or your editor) so the bot can read the mirrored window.
+   * System Settings → Privacy & Security → Accessibility: allow Terminal (or your editor) so the bot can control the mouse.
+   * The `keyboard` library may need Accessibility access too; if it cannot listen for `q`, run with sudo after granting access.
 
-7. Run the Clash Royale Automation bot code:
+5. Prepare iPhone mirroring:
+   * Connect your iPhone with a cable and open **QuickTime Player → New Movie Recording → select your iPhone as the camera**, or use the macOS “iPhone Mirroring” app.
+   * Place the mirrored window on your primary display and keep its size fixed. The provided coordinates assume the window is roughly centered; adjust in `cards.py` and `cr_ui.py` if you position/size it differently.
+
+6. Run the Clash Royale Automation bot code:
    ```sh
-   python play.py
+   python3 play.py
    ```
 ## How to Use
-1. Open Clash Royale on Google Play Emulator
-2. Edit the coordinates to fit your monitor size, the coordinates that will need to be changes are the specific area coordinates, not the ones that click where the image was found.
-3. There is a preset golem deck for this, (golem, nightwitch, edrag, babydrag, lumberjack, knight, bats, skeletons/evo skellies), some other cards have been coded in but if a card that you want to use has not been coded in, you can add the images necessary to a folder and use the format of the other cards in cards.py to write your own.
-4. Run the game:
+1. Mirror your iPhone to macOS (QuickTime Player device window or macOS “iPhone Mirroring”). Keep the window centered on your main display and do not resize it after calibrating coordinates.
+2. Calibrate coordinates:
+   * Run `python3 coordinates.py` to read live pixel positions while hovering the mouse over HUD elements.
+   * Update the regions in `cr_ui.py` (`battle_button_region`, `ok_button_region`, `elixir10_region`) and `cards.py` (`deck_area`, drop coordinates inside each method) to match your mirrored window placement.
+3. There is a preset golem deck (golem, nightwitch, edrag, babydrag, lumberjack, knight, bats, skeletons/evo skellies). If you need other cards, drop their images into `golemdeck/` and follow the patterns in `cards.py`.
+4. Start the bot:
    ```sh
-   python play.py
+   python3 play.py
    ```
+   Press `q` to exit.
 
 ## Credits
 * Developed by:

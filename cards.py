@@ -2,8 +2,12 @@ import cv2
 import numpy as np
 import time
 import random
-import win32api, win32con
 import mss
+import pyautogui
+
+# Disable the pyautogui fail-safe to avoid unwanted exceptions when the cursor
+# reaches a corner during rapid movements.
+pyautogui.FAILSAFE = False
 
 class Cards:
     def __init__(self):
@@ -11,10 +15,10 @@ class Cards:
         self.dragon_list = ['golemdeck/mybabydragon.png', 'golemdeck/myelectrodragon.png']
 
     def click(self, x, y): #clicks on screen
-        win32api.SetCursorPos((x, y))
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+        pyautogui.moveTo(x, y, duration=0)
+        pyautogui.mouseDown()
         time.sleep(0.01)
-        win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+        pyautogui.mouseUp()
 
     def capture_screenshot(self, region=None):
         with mss.mss() as sct:

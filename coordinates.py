@@ -1,10 +1,15 @@
 import cv2
 import numpy as np
 import mss
-import win32api
+import pyautogui
+import time
+
+# Disable the pyautogui fail-safe to avoid unwanted exceptions when the cursor
+# reaches a corner during rapid movements.
+pyautogui.FAILSAFE = False
 
 def get_mouse_position():
-    return win32api.GetCursorPos()
+    return pyautogui.position()
 
 def capture_screen(region=None):
     with mss.mss() as sct:
@@ -27,6 +32,9 @@ def main():
             pixel_color = screen[mouse_y, mouse_x]
             color_bgr = (int(pixel_color[0]), int(pixel_color[1]), int(pixel_color[2]))
             print(f"Mouse Position: ({mouse_x}, {mouse_y}) - Color (BGR): {color_bgr}", end='\r')
+
+        # Slow the loop slightly so macOS accessibility services keep up
+        time.sleep(0.01)
         
         # Display the screen
         #cv2.imshow("Screen", screen)
