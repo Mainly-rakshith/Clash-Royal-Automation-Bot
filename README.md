@@ -85,4 +85,7 @@ This is a Clash Royale Automation script that can play, exit matches, and queue 
 ## Credits
 * Developed by:
    * Justin Turbyfill
+* Edited by:
+   * Rakshith Jayakarthikeyan
+     
 * Date: August 15th, 2024
